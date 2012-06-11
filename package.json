@@ -1,5 +1,5 @@
 {
-	"name":         "Flowing",
+	"name":         "flowing",
 	"description":  "A Flow.js / Step derivated multi-step asynchronous logic library",
 	"author":       "Bastien Clément <g@ledric.me>",
 	
@@ -9,7 +9,7 @@
 		"url":   "http://github.com/galedric/flowing/raw/master/LICENSE"
 	}],
 	
-	"main": "./flowing.js"
+	"main": "./flowing.js",
 	
     "homepage": "https://github.com/galedric/flowing",
     
