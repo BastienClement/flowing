@@ -3,7 +3,7 @@
 	"description":  "A Flow.js / Step derivated multi-step asynchronous logic library",
 	"author":       "Bastien Clément <g@ledric.me>",
 	
-	"version":      "0.5.0",
+	"version":      "0.5.1",
 	"licenses": [{
 		"type":  "MIT",
 		"url":   "http://github.com/galedric/flowing/raw/master/LICENSE"

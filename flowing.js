@@ -75,7 +75,7 @@
       if (this.done) {
         return;
       }
-      args.shift(void 0);
+      args.unshift(void 0);
       this.cb.apply(null, args);
       this.done = true;
     };

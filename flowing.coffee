@@ -51,7 +51,7 @@ class FlowingContext
 	# Exit handlers
 	exit_success: (args) ->
 		return if @done
-		args.shift undefined # Add an undefined error before arguments
+		args.unshift undefined # Add an undefined error before arguments
 		@cb.apply null, args
 		@done = true
 		return
