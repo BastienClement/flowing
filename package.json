@@ -1,0 +1,20 @@
+{
+	"name":         "Flowing",
+	"description":  "A Flow.js / Step derivated multi-step asynchronous logic library",
+	"author":       "Bastien Clément <g@ledric.me>",
+	
+	"version":      "0.5.0",
+	"licenses": [{
+		"type":  "MIT",
+		"url":   "http://github.com/galedric/flowing/raw/master/LICENSE"
+	}],
+	
+	"main": "./flowing.js"
+	
+    "homepage": "https://github.com/galedric/flowing",
+    
+    "repository": {
+		"type": "git",
+		"url":  "git://github.com/galedric/flowing.git"
+	}
+}
