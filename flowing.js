@@ -160,6 +160,7 @@
       this.ctx = ctx;
       this._done = false;
       this._async = false;
+      this.data = this.ctx.data;
       this._p_count = 0;
       this._p_done = 0;
       this._p_idx = 0;
@@ -249,6 +250,21 @@
         this._done = true;
       }
       this.ctx.exit_fail(e);
+    };
+
+    StepDelegate.prototype.partial = function() {
+      var arg, args, _i, _len;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      if (this._done) {
+        return;
+      }
+      this._async = true;
+      this._p_count++;
+      this._p_done++;
+      for (_i = 0, _len = args.length; _i < _len; _i++) {
+        arg = args[_i];
+        this._p_args[this._p_idx++] = arg;
+      }
     };
 
     StepDelegate.prototype.parallel = function() {

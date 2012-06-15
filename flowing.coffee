@@ -122,6 +122,9 @@ class StepDelegate
 	constructor: (@ctx) ->
 		@_done = false
 		@_async = false
+		
+		# Expose data
+		@data = @ctx.data
 	
 		# Parallel stuff
 		@_p_count = 0
@@ -179,6 +182,17 @@ class StepDelegate
 	fail: (e) ->
 		if @_done then return else @_done = true
 		@ctx.exit_fail e
+		return
+	
+	# Give partial results to the next step
+	partial: (args...) ->
+		return if @_done
+		@_async = true
+		
+		@_p_count++
+		@_p_done++
+		@_p_args[@_p_idx++] = arg for arg in args
+		
 		return
 	
 	# Execute functions in parallel
