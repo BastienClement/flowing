@@ -51,14 +51,16 @@ class FlowingContext
 	# Exit handlers
 	exit_success: (args) ->
 		return if @done
-		args.unshift undefined # Add an undefined error before arguments
-		@cb.apply null, args
+		if typeof @cb == "function"
+			args.unshift undefined # Add an undefined error before arguments
+			@cb.apply null, args
 		@done = true
 		return
 		
 	exit_fail: (e) ->
 		return if @done
-		@cb e
+		if typeof @cb == "function"
+			@cb e
 		@done = true
 		return
 		
@@ -266,6 +268,10 @@ flowing = (args...) ->
 	
 	# The flow function
 	flow = (args..., cb) ->
+		if typeof cb != "function"
+			args.push cb
+			cb = -> #noop
+		
 		# Execution context
 		ctx = new FlowingContext steps, args, cb
 		
@@ -354,4 +360,6 @@ flowing.async = (step) -> tag step, "async"
 # Tag a step as delayed
 flowing.delayed = (step) -> tag step, "delay"
 
-module.exports = flowing
+# Exports
+flowing.version = "0.5.4"
+module.exports  = flowing

@@ -75,8 +75,10 @@
       if (this.done) {
         return;
       }
-      args.unshift(void 0);
-      this.cb.apply(null, args);
+      if (typeof this.cb === "function") {
+        args.unshift(void 0);
+        this.cb.apply(null, args);
+      }
       this.done = true;
     };
 
@@ -84,7 +86,9 @@
       if (this.done) {
         return;
       }
-      this.cb(e);
+      if (typeof this.cb === "function") {
+        this.cb(e);
+      }
       this.done = true;
     };
 
@@ -347,6 +351,10 @@
     flow = function() {
       var args, cb, ctx, _i;
       args = 2 <= arguments.length ? __slice.call(arguments, 0, _i = arguments.length - 1) : (_i = 0, []), cb = arguments[_i++];
+      if (typeof cb !== "function") {
+        args.push(cb);
+        cb = function() {};
+      }
       ctx = new FlowingContext(steps, args, cb);
       ctx.next(void 0, args);
     };
@@ -434,6 +442,8 @@
   flowing.delayed = function(step) {
     return tag(step, "delay");
   };
+
+  flowing.version = "0.5.4";
 
   module.exports = flowing;
 
