@@ -160,6 +160,11 @@ class StepDelegate
 			@ctx.next undefined, args
 		return
 	
+	# Delayed jump to an explicit label
+	jump: (label, args...) ->
+		return if @_done
+		return @ctx.jump label
+	
 	# Terminate the current step with success
 	done: (args...) ->
 		if @_done then return else @_done = true
