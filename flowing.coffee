@@ -1,5 +1,5 @@
 ###
-  Copyright (C) 2012 Copperflake Software
+  Copyright (C) 2012 Copperflake <http://www.copperflake.com>
 
   Permission is hereby granted, free of charge, to any person obtaining
   a copy of this software and associated documentation files (the
@@ -61,6 +61,8 @@ class FlowingContext
 		return if @done
 		if typeof @cb == "function"
 			@cb e
+		else if typeof flowing.trap == "function"
+			flowing.trap e, new Error "Flowing Trap"
 		@done = true
 		return
 		
@@ -270,7 +272,7 @@ flowing = (args...) ->
 	flow = (args..., cb) ->
 		if typeof cb != "function"
 			args.push cb
-			cb = -> #noop
+			cb = undefined
 		
 		# Execution context
 		ctx = new FlowingContext steps, args, cb
@@ -282,7 +284,7 @@ flowing = (args...) ->
 	flow._flow = true  # Tag as a flow for use as sub-flow
 	flow.steps = steps # Expose steps
 	
-	flow.exec = (args...) -> flow args..., -> #noop
+	flow.exec = (args...) -> flow args..., undefined
 	
 	return flow
 
@@ -290,6 +292,9 @@ flowing = (args...) ->
 flowing.exec = ->
 	flow = flowing.apply null, arguments
 	flow.exec()
+	
+# Error trap
+flowing.trap = null
 	
 # Normalize a deep input flow to a flat flow
 flowing.normalize = (step) ->
@@ -361,5 +366,5 @@ flowing.async = (step) -> tag step, "async"
 flowing.delayed = (step) -> tag step, "delay"
 
 # Exports
-flowing.version = "0.5.4"
+flowing.version = "0.5.5"
 module.exports  = flowing
