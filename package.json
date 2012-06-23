@@ -3,7 +3,7 @@
 	"description":  "A Flow.js / Step derivated multi-step asynchronous logic library",
 	"author":       "Copperflake",
 	
-	"version":      "0.5.5",
+	"version":      "0.5.6",
 	"licenses": [{
 		"type":  "MIT",
 		"url":   "http://github.com/copperflake/flowing/raw/master/LICENSE"

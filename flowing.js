@@ -282,9 +282,9 @@
       }
     };
 
-    StepDelegate.prototype.parallel = function() {
+    StepDelegate.prototype.parallel = function(p_opt) {
       this._async = true;
-      return this._parallel_callback(this._p_args, this._p_idx++);
+      return this._parallel_callback(this._p_args, this._p_idx++, p_opt);
     };
 
     StepDelegate.prototype.group = function() {
@@ -293,12 +293,12 @@
       this._async = true;
       local_args = this._p_args[this._p_idx++] = [];
       local_idx = 0;
-      return function() {
-        return _this._parallel_callback(local_args, local_idx++);
+      return function(p_opt) {
+        return _this._parallel_callback(local_args, local_idx++, p_opt);
       };
     };
 
-    StepDelegate.prototype._parallel_callback = function(arr, idx) {
+    StepDelegate.prototype._parallel_callback = function(arr, idx, p_opt) {
       var _this = this;
       this._p_count++;
       arr[idx] = void 0;
@@ -311,8 +311,12 @@
         if (e) {
           _this.error(e);
         } else {
-          if (args.length > 0) {
-            arr[idx] = args.length === 1 ? args[0] : args;
+          if (typeof p_opt === "function") {
+            arr[idx] = p_opt.apply(null, args);
+          } else if (typeof p_opt === "number") {
+            arr[idx] = args[p_opt];
+          } else if (args.length > 0) {
+            arr[idx] = args.length === 1 && p_opt ? args[0] : args;
           }
           _this._parallel_done();
         }
@@ -447,7 +451,7 @@
     return tag(step, "delay");
   };
 
-  flowing.version = "0.5.5";
+  flowing.version = "0.5.6";
 
   module.exports = flowing;
 
