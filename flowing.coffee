@@ -210,14 +210,14 @@ class StepDelegate
 		return @_parallel_callback @_p_args, @_p_idx++, p_opt
 	
 	# Allocate a slot in arguments for parallel execution
-	group: ->
+	group: (common_p_opt) ->
 		@_async = true
 		
 		local_args = @_p_args[@_p_idx++] = []
 		local_idx  = 0
 		
 		# Group-callback generator
-		return (p_opt) => @_parallel_callback local_args, local_idx++, p_opt
+		return (p_opt) => @_parallel_callback local_args, local_idx++, (p_opt || common_p_opt)
 				
 	# Generate parallel callback
 	_parallel_callback: (arr, idx, p_opt) ->
@@ -241,7 +241,7 @@ class StepDelegate
 					arr[idx] = args[p_opt]
 				else if args.length > 0
 					# Extract from array if only one value (only if p_opt is false)
-					arr[idx] = if args.length == 1 && p_opt then args[0] else args
+					arr[idx] = if args.length == 1 && !p_opt then args[0] else args
 				@_parallel_done()
 			
 			return
@@ -372,5 +372,5 @@ flowing.async = (step) -> tag step, "async"
 flowing.delayed = (step) -> tag step, "delay"
 
 # Exports
-flowing.version = "0.5.6"
+flowing.version = "0.5.7"
 module.exports  = flowing
