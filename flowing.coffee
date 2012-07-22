@@ -142,10 +142,10 @@ class StepDelegate
 		if typeof name == "object"
 			# Keys / Values map
 			@ctx.data[key] = val for key, val of name
+			return name
 		else
 			@ctx.data[name] = value
-		
-		return
+			return value
 	
 	get: (name) -> @ctx.data[name]
 	
