@@ -147,7 +147,14 @@ class StepDelegate
 			@ctx.data[name] = value
 			return value
 	
-	get: (name) -> @ctx.data[name]
+	get: (names...) ->
+		if names.length < 2
+			return @ctx.data[names]
+		
+		values = []
+		values.push @ctx.data[name] for name in names
+		
+		return values
 	
 	# Node-compatible callback for next step
 	next: ->
