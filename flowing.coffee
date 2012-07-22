@@ -211,13 +211,13 @@ class StepDelegate
 	
 	# Allocate a slot in arguments for parallel execution
 	group: (common_p_opt) ->
-		@_async = true
-		
 		local_args = @_p_args[@_p_idx++] = []
 		local_idx  = 0
 		
 		# Group-callback generator
-		return (p_opt) => @_parallel_callback local_args, local_idx++, (p_opt || common_p_opt)
+		return (p_opt) =>
+			@_async = true
+			return @_parallel_callback local_args, local_idx++, (p_opt || common_p_opt)
 				
 	# Generate parallel callback
 	_parallel_callback: (arr, idx, p_opt) ->
