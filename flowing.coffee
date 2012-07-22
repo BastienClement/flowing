@@ -217,7 +217,9 @@ class StepDelegate
 		# Group-callback generator
 		return (p_opt) =>
 			@_async = true
-			return @_parallel_callback local_args, local_idx++, (p_opt || common_p_opt)
+			if typeof p_opt == "undefined"
+				p_opt = common_p_opt
+			return @_parallel_callback local_args, local_idx++, p_opt
 				
 	# Generate parallel callback
 	_parallel_callback: (arr, idx, p_opt) ->
