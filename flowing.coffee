@@ -381,5 +381,5 @@ flowing.async = (step) -> tag step, "async"
 flowing.delayed = (step) -> tag step, "delay"
 
 # Exports
-flowing.version = "0.5.7"
+flowing.version = "0.5.8"
 module.exports  = flowing

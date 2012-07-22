@@ -181,13 +181,25 @@
           val = name[key];
           this.ctx.data[key] = val;
         }
+        return name;
       } else {
         this.ctx.data[name] = value;
+        return value;
       }
     };
 
-    StepDelegate.prototype.get = function(name) {
-      return this.ctx.data[name];
+    StepDelegate.prototype.get = function() {
+      var name, names, values, _i, _len;
+      names = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      if (names.length < 2) {
+        return this.ctx.data[names];
+      }
+      values = [];
+      for (_i = 0, _len = names.length; _i < _len; _i++) {
+        name = names[_i];
+        values.push(this.ctx.data[name]);
+      }
+      return values;
     };
 
     StepDelegate.prototype.next = function() {
@@ -290,11 +302,14 @@
     StepDelegate.prototype.group = function(common_p_opt) {
       var local_args, local_idx,
         _this = this;
-      this._async = true;
       local_args = this._p_args[this._p_idx++] = [];
       local_idx = 0;
       return function(p_opt) {
-        return _this._parallel_callback(local_args, local_idx++, p_opt || common_p_opt);
+        _this._async = true;
+        if (typeof p_opt === "undefined") {
+          p_opt = common_p_opt;
+        }
+        return _this._parallel_callback(local_args, local_idx++, p_opt);
       };
     };
 
@@ -451,7 +466,7 @@
     return tag(step, "delay");
   };
 
-  flowing.version = "0.5.7";
+  flowing.version = "0.5.8";
 
   module.exports = flowing;
 
