@@ -279,7 +279,7 @@
       this.ctx.exit_fail(e);
     };
 
-    StepDelegate.prototype.partial = function() {
+    StepDelegate.prototype.pass = function() {
       var arg, args, _i, _len;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
       if (this._done) {
@@ -466,7 +466,7 @@
     return tag(step, "delay");
   };
 
-  flowing.version = "0.5.8";
+  flowing.version = "0.6.0";
 
   module.exports = flowing;
 

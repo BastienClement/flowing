@@ -200,8 +200,8 @@ class StepDelegate
 		@ctx.exit_fail e
 		return
 	
-	# Give partial results to the next step
-	partial: (args...) ->
+	# Pass results to the next step
+	pass: (args...) ->
 		return if @_done
 		@_async = true
 		
@@ -381,5 +381,5 @@ flowing.async = (step) -> tag step, "async"
 flowing.delayed = (step) -> tag step, "delay"
 
 # Exports
-flowing.version = "0.5.8"
+flowing.version = "0.6.0"
 module.exports  = flowing
