@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/copperflake/flowing.png)](http://travis-ci.org/copperflake/flowing)
 flowing
 =======
 
